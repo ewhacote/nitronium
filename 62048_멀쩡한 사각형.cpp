@@ -2,39 +2,20 @@
 // Created by KangMinji on 2023-09-20.
 // https://school.programmers.co.kr/learn/courses/30/lessons/62048
 
-#include <cmath>
-
 using namespace std;
 
-int getGCD(long long a, long long b){
-	int small, big;
-	if(a>b) {
-		big = a;
-		small = b;
-	} else{
-		big = b;
-		small = a;
+int makeGCD(int a, int b){
+	if (b == 0){
+		return a;
 	}
-
-	int mod = big%small;
-
-	while(mod>0){
-		big = small;
-		small = mod;
-		mod = big%small;
-	}
-
-	return small;
+	return makeGCD(b, a%b);
 }
 
-long long solution(int w,int h) {
-	long long W = w;
-	long long H = h;
+long long solution(int w, int h) {
+	long long answer = 1;
 
-	int gcd = getGCD(W, H);
-
-	long long total = W*H;
-	long long answer = total - (W+H-gcd);
-
+	int gcd = makeGCD(w, h);
+	answer = (long long)w * (long long)h;
+	answer -= gcd * (w / gcd + h / gcd - 1);
 	return answer;
 }
